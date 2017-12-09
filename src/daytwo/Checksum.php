@@ -1,8 +1,6 @@
 <?php
 namespace DayTwo;
 
-use DayTwo\MinMax;
-
 class MinMax
 {
     public $min;
@@ -16,28 +14,29 @@ class MinMax
 class Checksum{
     private $minmax;
     private $arr;
-    private $size;
+    private $twoD_flag;
 
     function __construct($arr){
         $this->minmax = new MinMax();
         $this->arr = $arr;
-        $this->size = sizeof($this->arr);
+        $this->twoD_flag = is_array($arr[0]);
     }
 
-    private function getMinMax()
+    private function getMinMax($arr)
     {
         $this->minmax = new MinMax();
-        $i = 0;   
+        $i = 0;
+        $size = sizeof($arr);   
     /* If array has even number of elements then 
     initialize the first two elements as minimum and 
     maximum */
-        if ($this->size % 2 == 0) {
-            if ($this->arr[0] > $this->arr[1]) {
-                $this->minmax->max = $this->arr[0];
-                $this->minmax->min = $this->arr[1];
+        if ($size % 2 == 0) {
+            if ($arr[0] > $arr[1]) {
+                $this->minmax->max = $arr[0];
+                $this->minmax->min = $arr[1];
             } else {
-                $this->minmax->min = $this->arr[0];
-                $this->minmax->max = $this->arr[1];
+                $this->minmax->min = $arr[0];
+                $this->minmax->max = $arr[1];
             }
             $i = 2;  /* set the startung index for loop */
         }  
@@ -46,24 +45,24 @@ class Checksum{
     initialize the first element as minimum and 
     maximum */
         else {
-            $this->minmax->min = $this->arr[0];
-            $this->minmax->max = $this->arr[0];
+            $this->minmax->min = $arr[0];
+            $this->minmax->max = $arr[0];
             $i = 1;  /* set the startung index for loop */
         }
    
     /* In the while loop, pick elements in pair and 
     compare the pair with max and min so far */
-        while ($i < $this->size - 1) {
-            if ($this->arr[$i] > $this->arr[$i + 1]) {
-                if ($this->arr[$i] > $this->minmax->max)
-                    $this->minmax->max = $this->arr[$i];
-                if ($this->arr[$i + 1] < $this->minmax->min)
-                    $this->minmax->min = $this->arr[$i + 1];
+        while ($i < $size - 1) {
+            if ($arr[$i] > $arr[$i + 1]) {
+                if ($arr[$i] > $this->minmax->max)
+                    $this->minmax->max = $arr[$i];
+                if ($arr[$i + 1] < $this->minmax->min)
+                    $this->minmax->min = $arr[$i + 1];
             } else {
-                if ($this->arr[$i + 1] > $this->minmax->max)
-                    $this->minmax->max = $this->arr[$i + 1];
-                if ($this->arr[$i] < $this->minmax->min)
-                    $this->minmax->min = $this->arr[$i];
+                if ($arr[$i + 1] > $this->minmax->max)
+                    $this->minmax->max = $arr[$i + 1];
+                if ($arr[$i] < $this->minmax->min)
+                    $this->minmax->min = $arr[$i];
             }
             $i += 2; /* Increment the index by 2 as two 
                elements are processed in loop */
@@ -71,19 +70,40 @@ class Checksum{
     }
 
     public function checkSum(){
-        switch ($this->size) {
+        if($this->twoD_flag){
+            return $this->twoDCheckSum($this->arr);
+        }else{
+            return $this->callCheckSum($this->arr);
+        }    
+    }
+    public function callCheckSum($arr){
+        $size = sizeof($arr);
+        switch ($size) {
             case 1:
-                return $this->arr[0];
+                return $arr[0];
                 break;
             
             default:
-                return $this->checksumArraySizeGreaterThanTwo();
+                return $this->checksumArraySizeGreaterThanTwo($arr);
                 break;
         }    
     }
     
-    private function checksumArraySizeGreaterThanTwo(){
-        $this->getMinMax();
-        return $this->minmax->getChecksum();
+    private function checksumArraySizeGreaterThanTwo($arr){
+        $this->getMinMax($arr);
+        return $this->minmax->getChecksum($arr);
+    }
+
+    private function isArrayTwoD(){
+        return $this->twoD_flag;
+    }
+
+    private function twoDCheckSum($arr){
+        $size = sizeof($arr);
+        $total = 0;
+        for ($i = 0; $i < $size ; $i++) {
+            $total += $this->callCheckSum($arr[$i]);
+        }
+        return $total;
     }
 }
