@@ -1,0 +1,22 @@
+{
+    "name": "danielg/adventofcode",
+    "description": "Advent of code Challenges 2017",
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "danie16arrido",
+            "email": "daniel.garrido.info@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "DayTwo\\": "src/daytwo"
+        }
+    }
+    
+    
+}
