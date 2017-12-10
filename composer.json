@@ -14,7 +14,8 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "DayTwo\\": "src/daytwo"
+            "DayTwo\\": "src/daytwo",
+            "DayThree\\": "src/daythree"
         }
     }
     

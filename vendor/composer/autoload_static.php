@@ -24,6 +24,7 @@ class ComposerStaticInitd76f2ee706497c4b6dbc14a8c4d6cb8a
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
             'DayTwo\\' => 7,
+            'DayThree\\' => 9,
         ),
     );
 
@@ -49,6 +50,10 @@ class ComposerStaticInitd76f2ee706497c4b6dbc14a8c4d6cb8a
         'DayTwo\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/daytwo',
+        ),
+        'DayThree\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/daythree',
         ),
     );
 
